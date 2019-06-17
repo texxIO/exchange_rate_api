@@ -1,2 +1,2 @@
-# exghange_rate_api
+# exchange_rate_api
 Just some exchange rate api
