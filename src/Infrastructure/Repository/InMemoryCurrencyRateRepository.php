@@ -64,10 +64,19 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
      * @param CurrencyPair $currencyPair
      * @param float $rateValue
      * @return CurrencyRate
+     * @throws CurrencyPairNotFoundException
      */
     public function update(CurrencyPair $currencyPair, float $rateValue): CurrencyRate
     {
-        // TODO: Implement update() method.
+        if ( $this->currencyPairExists($currencyPair) )
+        {
+            $rate = $this->currencyRate[$currencyPair->toString()];
+            $rate->setRateValue($rateValue);
+            $this->currencyRate[$currencyPair->toString()] = $rate;
+            return $this->currencyRate[$currencyPair->toString()];
+        }
+
+        throw new CurrencyPairNotFoundException();
     }
 
     /**
@@ -86,9 +95,19 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
         }
     }
 
+    /**
+     * @param CurrencyPair $currencyPair
+     * @return CurrencyRate
+     * @throws CurrencyPairNotFoundException
+     */
     public function getRateByCurrency(CurrencyPair $currencyPair): CurrencyRate
     {
+        if ( $this->currencyPairExists($currencyPair) )
+        {
+            return $this->currencyRate[$currencyPair->toString()];
+        }
 
+        throw new CurrencyPairNotFoundException();
     }
 
 
