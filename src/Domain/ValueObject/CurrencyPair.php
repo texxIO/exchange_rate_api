@@ -4,7 +4,7 @@
 namespace App\Domain\ValueObject;
 
 
-class CurrencyPair
+final class CurrencyPair
 {
     /** @var string */
     private $pair;
