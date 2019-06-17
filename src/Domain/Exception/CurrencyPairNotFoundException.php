@@ -4,7 +4,9 @@
 namespace App\Domain\Exception;
 
 
-class CurrencyPairNotFoundException extends \Exception
+use Exception;
+
+class CurrencyPairNotFoundException extends Exception
 {
 
 }

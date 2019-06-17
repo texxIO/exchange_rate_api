@@ -13,7 +13,7 @@ class CurrencyRate
     private $currencyPair;
 
     /** @var float $rate */
-    private  $rateValue;
+    private $rateValue;
 
     /** @var DateTime $createdAt */
     private $createdAt;
@@ -43,9 +43,9 @@ class CurrencyRate
 
     /**
      * @param CurrencyPair $currencyPair
-     * @return Rate
+     * @return CurrencyRate
      */
-    public function setCurrencyPair(CurrencyPair $currencyPair): Rate
+    public function setCurrencyPair(CurrencyPair $currencyPair): CurrencyRate
     {
         $this->currencyPair = $currencyPair;
         return $this;
@@ -61,68 +61,66 @@ class CurrencyRate
 
     /**
      * @param float $rateValue
-     * @return Rate
+     * @return CurrencyRate
      */
-    public function setRateValue(float $rateValue): Rate
+    public function setRateValue(float $rateValue): CurrencyRate
     {
         $this->rateValue = $rateValue;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $createdAt
-     * @return Rate
+     * @param DateTime $createdAt
+     * @return CurrencyRate
      */
-    public function setCreatedAt(\DateTime $createdAt): Rate
+    public function setCreatedAt(DateTime $createdAt): CurrencyRate
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param \DateTime $updatedAt
-     * @return Rate
+     * @param DateTime $updatedAt
+     * @return CurrencyRate
      */
-    public function setUpdatedAt(\DateTime $updatedAt): Rate
+    public function setUpdatedAt(DateTime $updatedAt): CurrencyRate
     {
         $this->updatedAt = $updatedAt;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDeletedAt(): \DateTime
+    public function getDeletedAt(): ?DateTime
     {
         return $this->deletedAt;
     }
 
     /**
-     * @param \DateTime $deletedAt
-     * @return Rate
+     * @param DateTime $deletedAt
+     * @return CurrencyRate
      */
-    public function setDeletedAt(\DateTime $deletedAt): Rate
+    public function setDeletedAt(DateTime $deletedAt): CurrencyRate
     {
         $this->deletedAt = $deletedAt;
         return $this;
     }
-
-
 
 }

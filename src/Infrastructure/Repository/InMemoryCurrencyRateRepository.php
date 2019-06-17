@@ -22,9 +22,19 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
         $this->loadRates();
     }
 
-    public function currencyPairExists(CurrencyPair $currencyPair): bool
+    /**
+     * Load some pairs to simulate the database
+     */
+    protected function loadRates()
     {
-        return (isset($this->currencyRate[$currencyPair->toString()])?true:false);
+        $currencyPairs = ['eurgbp', 'eurusd', 'gbpjpy', 'usdjpy'];
+
+        foreach ($currencyPairs as $pair) {
+            $pairObject = CurrencyPair::fromString($pair);
+            $aRandomValue = mt_rand() / mt_getrandmax();
+            $this->currencyRate[$pair] = new CurrencyRate($pairObject, $aRandomValue);
+        }
+
     }
 
     /**
@@ -32,16 +42,20 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
      * @return CurrencyRate
      * @throws CurrencyPairExistsException
      */
-    public function store(CurrencyRate $rate):CurrencyRate
+    public function store(CurrencyRate $rate): CurrencyRate
     {
-        if ( !$this->currencyPairExists($rate->getCurrencyPair()) )
-        {
+        if (!$this->currencyPairExists($rate->getCurrencyPair())) {
             $this->currencyRate[$rate->getCurrencyPair()->toString()] = $rate;
             return $rate;
         }
 
         throw new CurrencyPairExistsException();
 
+    }
+
+    public function currencyPairExists(CurrencyPair $currencyPair): bool
+    {
+        return (isset($this->currencyRate[$currencyPair->toString()]) ? true : false);
     }
 
     /**
@@ -51,8 +65,7 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
      */
     public function remove(CurrencyPair $currencyPair): bool
     {
-        if ( $this->currencyPairExists($currencyPair) )
-        {
+        if ($this->currencyPairExists($currencyPair)) {
             unset($this->currencyRate[$currencyPair->toString()]);
             return true;
         }
@@ -68,8 +81,7 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
      */
     public function update(CurrencyPair $currencyPair, float $rateValue): CurrencyRate
     {
-        if ( $this->currencyPairExists($currencyPair) )
-        {
+        if ($this->currencyPairExists($currencyPair)) {
             $rate = $this->currencyRate[$currencyPair->toString()];
             $rate->setRateValue($rateValue);
             $this->currencyRate[$currencyPair->toString()] = $rate;
@@ -80,30 +92,13 @@ final class InMemoryCurrencyRateRepository implements CurrencyRateRepositoryInte
     }
 
     /**
-     * Load some pairs to simulate the database
-     */
-    protected function loadRates()
-    {
-        $currencyPairs = ['EURGBP', 'EURUSD', 'GBPJPY', 'USDJPY'];
-
-        $currencyRates = [];
-        foreach ( $currencyPairs as $pair )
-        {
-            $pairObject = CurrencyPair::fromString($pair);
-            $aRandomValue = mt_rand() / mt_getrandmax();
-            $currencyRates[$pair] = new CurrencyRate($pairObject, $aRandomValue );
-        }
-    }
-
-    /**
      * @param CurrencyPair $currencyPair
      * @return CurrencyRate
      * @throws CurrencyPairNotFoundException
      */
     public function getRateByCurrency(CurrencyPair $currencyPair): CurrencyRate
     {
-        if ( $this->currencyPairExists($currencyPair) )
-        {
+        if ($this->currencyPairExists($currencyPair)) {
             return $this->currencyRate[$currencyPair->toString()];
         }
 
