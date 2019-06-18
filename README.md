@@ -28,7 +28,7 @@ curl -X PUT \
  The tests can be run with `./bin/phpunit`
 
 Good to know! 
-This project doesnt uses a database, has an inMemory repository for tests.
+This project doesnt use a database, has an inMemory repository for tests.
 I'll add it at some point.
 
 Have fun!
